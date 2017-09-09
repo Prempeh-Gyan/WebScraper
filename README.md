@@ -21,32 +21,32 @@ Get the project from the source repository
 >`git clone https://github.com/Prempeh-Gyan/WebScraper.git`
 
 ### Running the Project
-To run the project, first navigate into the source directory `cd Web Scraper` and execute:
+To run the project, first navigate into the source directory `cd WebScraper` and execute the following command:
 
 * `mvn spring-boot:run`:
 
-an that's all you need to do to get it started.
+that's all you need to get it started.
 
 The application starts the server instance on port `8080`.
-> [`http://localhost:8080`][1]
+> [`http://localhost:8080`][]
 
 Open the link in your browser and start using it.
 
 ### Application Features
 The main functionality of this API is to take a given url, navigate to this url, `crawl` the page and extract all `<a>` tags on the page.
-Using `href` attribute of the tags, the `urls` defined in the tags are extracted and processed for presentation.
-The `urls` are grouped using their `host names`. A list of `host name - frequency` is then returned in [JSON][json] format to the client.
+Using the `href` attribute of the tags, the `urls` defined in the tags are extracted and processed for presentation.
+The `urls` are grouped using their `host names`. A list of `host name - frequency` is then returned in [JSON][] format.
 
 #### The RESTful API endpoint
 
-> [`http://localhost:8080/summarizeLinksOnPage`][1]
+> [`http://localhost:8080/summarizeLinksOnPage`][]
 
 This is the `API-endpoint` from which you send requests.
-Note that when you do a get request from the browser you will have to follow the `API-endpoint` with `?url=someActualURL`
+Note that when you do a get request from the browser you will have to follow the `API-endpoint` with a `?url=someActualURL`
 The `url` is the parameter you are passing to the `Web-Service` for processing. Hence an example of a full request to the `API-endpoint` will be
-> [`http://localhost:8080/summarizeLinksOnPage?url=https://github.com/Prempeh-Gyan/WebScraper`][1]
+> [`http://localhost:8080/summarizeLinksOnPage?url=https://github.com/Prempeh-Gyan/WebScraper`][]
 
-You can also make a post request to the same `API-endpoint` in which case you will have to provide the `url parameter` in a `form-data`
+You can also make a post request to the same `API-endpoint` in which case you will have to provide the `url parameter` as a `form-data`
 
 ### The Web Service
 Below is the code snippet for the web service of the `API-endpoint`
@@ -154,7 +154,6 @@ public class ScrapingService {
 ```
 
 ### The Utility Class for processing the list returned by the Web Service
-Below is the code snippet for the web service of the `API-endpoint`
 
 file: `src/main/java/com/prempeh/webscraper/utility/SummarizeLinksUtil.java`
 ```java
