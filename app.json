@@ -1,0 +1,10 @@
+{
+  "name": "Web Scraper",
+  "description": "This app demonstrate how to use JSoup to scrape websites.",
+  "repository": "https://github.com/juliuskrah/WebScraper",
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ]
+}
