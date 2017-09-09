@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+
+<title>Error Page</title>
+
+<!-- Bootstrap -->
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+
+<!-- Font Awesome -->
+<link th:href="@{css/font-awesome.min.css}" rel="stylesheet"></link>
+
+<link th:href="@{css/custom.min.css}" rel="stylesheet"></link>
+</head>
+
+<body class="login">
+	<div>
+		<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
+			id="signin"></a>
+
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content" style="text-shadow: none;">
+					<h3 th:text="${status + ' - ' + error}"></h3>
+					<p th:utext="${message}"></p>
+					<a href="/" th:href="@{/}">Back to Index Page</a>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

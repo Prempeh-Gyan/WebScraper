@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+
+<title>Web Scraping</title>
+
+<!-- Bootstrap -->
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+
+<!-- Font Awesome -->
+<link th:href="@{css/font-awesome.min.css}" rel="stylesheet"></link>
+
+<link th:href="@{css/custom.min.css}" rel="stylesheet"></link>
+</head>
+
+<body class="login">
+	<div>
+		<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
+			id="signin"></a>
+
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content" style="text-shadow: none;">
+
+					<form role="form" th:action="@{index}" method="post">
+
+						<h3>Summary of all links on a page</h3>
+
+						<th:block th:if="${param.message}">
+							<div class="alert alert-info alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-hidden="true">&times;</button>
+								<span><strong th:text="${param.message[0]}">message</strong></span>
+							</div>
+						</th:block>
+						<div>
+							<input id="url" name="url" placeholder="Enter url..." type="url"
+								class="form-control" required="required" />
+						</div>
+						<br /> <br />
+						<div>
+							<button type="submit" class="btn btn-dark">MVC Submit</button>
+							<button type="button" class="btn btn-dark"
+								onclick="getSummary();">Restful Submit</button>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="separator">
+							<div id="responseStatus">
+								<th:block th:if="${pageSummary}">
+									<div class="block">
+										<div class="block_content">
+											<h2 class="title">
+												<strong>Summary</strong>
+											</h2>
+											<div>
+												<ul style="text-align: left;">
+													<li th:each="link : ${pageSummary}"><a
+														th:href="${'http://' + link.key}" th:text="${link.key + ' - ' + link.value}" target="_blank"></a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+
+								</th:block>
+							</div>
+							<div class="clearfix"></div>
+							<br />
+
+						</div>
+					</form>
+				</section>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript">
+		function getSummary() {
+			$("#responseStatus").empty();
+			$("#responseStatus")
+					.append(
+							'<div class="block"><div class="block_content"><h2 class="title" style="text-align: center;"><strong><a>Requesting Summary...</a></strong></h2></div></div>');
+			$
+					.getJSON(
+							"summarizeLinksOnPage",
+							{
+								url : $('#url').val()
+							},
+							function(data) {
+								$("#responseStatus").empty();
+								$("#responseStatus")
+										.append(
+												'<div class="block"><div class="block_content"><h2 class="title"><strong>Summary</strong></h2><div><ul id="statsDiv"></ul></div></div></div>');
+								$
+										.each(
+												data,
+												function(key, val) {
+													$("#statsDiv")
+															.append(
+																	'<li style="text-align: left;">'
+																			+ '<a href="http://' + key + '" target="_blank">'
+																			+ key
+																			+ '</a>'
+																			+ " - "
+																			+ val
+																			+ '</li>');
+
+												})
+							})
+					.fail(
+							function(jqxhr, textStatus, error) {
+								$("#responseStatus").empty();
+								$("#responseStatus")
+										.append(
+												'<div class="block"><div class="block_content"><h2 class="title" style="text-align: center;"><strong>Malformed or Invalid URL: ' + $('#url').val() + '</strong></h2></div></div>');
+							});
+		}
+	</script>
+</body>
+</html>
