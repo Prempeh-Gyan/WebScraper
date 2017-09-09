@@ -51,9 +51,10 @@ You can also make a post request to the same `API-endpoint` in which case you wi
 ### The Web Service
 Below is the code snippet for the web service of the `API-endpoint`
 
-file: `src/main/java/com/prempeh/webScraper/service/WebScrapingService.java`
+file: `src/main/java/com/prempeh/webscraper/service/ScrapingService.java`
 ```java
-package com.prempeh.webScraper.service;
+
+package com.prempeh.webscraper.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -68,11 +69,10 @@ import org.springframework.stereotype.Service;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
 /**
- * This WebScrapingService Class takes a url, uses Jsoup to connect to the page,
+ * This ScrapingService Class takes a url, uses Jsoup to connect to the page,
  * extract links from the page and return a list of all the links on the page
- *
+ * 
  * @author Prince Prempeh Gyan
  * @version 1.0 <br/>
  *          Date: 09/09/2017
@@ -81,7 +81,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Data
 @Slf4j
-public class WebScrapingService {
+public class ScrapingService {
 
 	/**
 	 * @param url
@@ -99,19 +99,19 @@ public class WebScrapingService {
 		log.info("Jsoup is connecting to : {}", url);
 
 		/**
-		 * When Jsoup connect to the url, it parses the the resource as an HTML Document
+		 * When Jsoup connects to the url, it parses the resource as an HTML Document
 		 * and saves it into the "webPage" variable for use
 		 */
 		Document webPage = Jsoup.connect(url).get();
 
-		log.info("Extracting <a> tags from {}", url);
+		log.info("Extracting anchor tags from {}", url);
 
 		/**
 		 * The Elements map to actual elements in the HTML document saved in the
 		 * "webPage" variable. By calling the "select" method on the "webPage" variable,
-		 * the links on the page that appear in the \"<a>\" tag can be extracted by
+		 * the links on the page that appear in the anchor tag can be extracted by
 		 * passing "a[href]" as an argument to method "select". The result is a list of
-		 * <!-- <a> --> tag elements saved in the "linksOnPage" variable
+		 * anchor tag elements saved in the "linksOnPage" variable
 		 */
 		Elements linksOnPage = webPage.select("a[href]");
 
@@ -120,7 +120,7 @@ public class WebScrapingService {
 		 * URIs. Java 8s streams and lambdas are used here to enhance performance. For
 		 * the purposes of this application only the host names of the URIs are of
 		 * interest at this level, the "schemes" and the "paths" are not necessary. All
-		 * extracted host names are added to the "linksExtractedOnPage" list variable.
+		 * extracted host names are added to the "linksExtractedOnPage" variable.
 		 * At this point the list may contain duplicate host names.
 		 */
 		linksOnPage.parallelStream().forEach(linkOnPage -> {
@@ -156,9 +156,9 @@ public class WebScrapingService {
 ### The Utility Class for processing the list returned by the Web Service
 Below is the code snippet for the web service of the `API-endpoint`
 
-file: `src/main/java/com/prempeh/webScraper/util/SummarizeLinksOnPageUtil.java`
+file: `src/main/java/com/prempeh/webscraper/utility/SummarizeLinksUtil.java`
 ```java
-package com.prempeh.webScraper.util;
+package com.prempeh.webscraper.utility;
 
 import java.io.IOException;
 import java.util.List;
@@ -166,26 +166,26 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.prempeh.webScraper.service.WebScrapingService;
+import com.prempeh.webscraper.service.ScrapingService;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This Class uses streams and lambdas to process the list of links returned by
- * WebScrapingService, thereby removing empty links and grouping them according
- * to their host names
- *
+ * This Class uses streams and lambdas to process the links returned by the
+ * ScrapingService, thereby removing empty links and grouping them according to
+ * their host names
+ * 
  * @author Prince Prempeh Gyan
  * @version 1.0 <br/>
  *          Date: 09/09/2017
  *
  */
 @Slf4j
-public class SummarizeLinksOnPageUtil {
+public class SummarizeLinksUtil {
 
-	public static Map<String, Long> getSummary(String url, WebScrapingService webScrapingService) throws IOException {
+	public static Map<String, Long> getSummary(String url, ScrapingService scrapingService) throws IOException {
 
-		List<String> linksOnPage = webScrapingService.getAllLinksOnThisPage(url);
+		List<String> linksOnPage = scrapingService.getAllLinksOnThisPage(url);
 
 		log.info("List of HostNames recieved");
 		log.info("Removing empty HostNames from list");
@@ -193,17 +193,15 @@ public class SummarizeLinksOnPageUtil {
 		log.info("Creating a Map with unique HostNames as key and their frequencies as values");
 
 		/**
-		 * Since Maps have unique keys, whiles the stream is being processed the
-		 * filtered host names which have no empty or null elements are grouped into a
-		 * Map of Key Value pairs, where the host names are saved as Keys and their
-		 * corresponding quantities are saved as values. The result is a Map of unique
-		 * host names as keys and their frequencies. This is then return to the client
-		 * later in JSON format.
+		 * Since Maps have unique keys, while the stream is being processed the filtered
+		 * host names which have no empty or null elements are grouped into a Map of Key
+		 * Value pairs, where the host names are saved as Keys and their corresponding
+		 * frequencies are saved as values. The result is then returned to the caller.
 		 */
 		Map<String, Long> SummaryOfLinksOnPage = linksOnPage.parallelStream()
 				.filter(link -> (link != null && link != ""))
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-		log.info("Returning Summarized Links Data for {}", url);
+		log.info("Returning results of URLs and their corresponding frequencies of appearnace on {}", url);
 		return SummaryOfLinksOnPage;
 	}
 
