@@ -1,4 +1,4 @@
-# Simple Web Scraping API
+# A Simple Web Scraping API
 
 ## Quick Start
 This section contains the pre-requisite to run the application and how to use the API.
@@ -8,15 +8,19 @@ To deploy this project on Heroku, click the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/Prempeh-Gyan/WebScraper)
 
-*Required*
-* [Maven][] 3.3+
-* [JDK][] 8+ - you will need at least Java-8 to run this application
+### Or Simply wake the Dyno
+[`Wake the Dyno`](https://webskraper.herokuapp.com/)
 
-*Optional*
-
-* [Postman][] - for testing the api endpoints
 
 ### Getting the Project
+
+*Required*
+* [`Maven`](https://maven.apache.org/) 3.3+
+* [`JDK`](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 8+ - you will need at least Java-8 to run this application
+
+*Optional*
+* [`Postman`](https://www.getpostman.com/) - for testing the api endpoints
+
 Get the project from the source repository
 >`git clone https://github.com/Prempeh-Gyan/WebScraper.git`
 
@@ -28,23 +32,23 @@ To run the project, first navigate into the source directory `cd WebScraper` and
 that's all you need to get it started.
 
 The application starts the server instance on port `8080`.
-> [`http://localhost:8080`][]
+> [`http://localhost:8080`](http://localhost:8080)
 
 Open the link in your browser and start using it.
 
 ### Application Features
 The main functionality of this API is to take a given url, navigate to this url, `crawl` the page and extract all `<a>` tags on the page.
 Using the `href` attribute of the tags, the `urls` defined in the tags are extracted and processed for presentation.
-The `urls` are grouped using their `host names`. A list of `host name - frequency` is then returned in [JSON][] format.
+The `urls` are grouped using their `host names`. A list of `host name - frequency` is then returned in [JSON](http://json.org/) format.
 
 #### The RESTful API endpoint
 
-> [`http://localhost:8080/summarizeLinksOnPage`][]
+> [`http://localhost:8080/summarizeLinksOnPage`](http://localhost:8080/summarizeLinksOnPage)
 
 This is the `API-endpoint` from which you send requests.
 Note that when you do a get request from the browser you will have to follow the `API-endpoint` with a `?url=someActualURL`
 The `url` is the parameter you are passing to the `Web-Service` for processing. Hence an example of a full request to the `API-endpoint` will be
-> [`http://localhost:8080/summarizeLinksOnPage?url=https://github.com/Prempeh-Gyan/WebScraper`][]
+> [`http://localhost:8080/summarizeLinksOnPage?url=https://github.com/Prempeh-Gyan/WebScraper`](http://localhost:8080/summarizeLinksOnPage?url=https://github.com/Prempeh-Gyan/WebScraper)
 
 You can also make a post request to the same `API-endpoint` in which case you will have to provide the `url parameter` as a `form-data`
 
