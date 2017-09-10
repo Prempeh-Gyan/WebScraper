@@ -10,6 +10,7 @@ To deploy this project on Heroku, click the button below:
 
 ### Or Simply wake the Dyno
 [`Wake the Dyno`](https://webskraper.herokuapp.com/)
+It takes between 15 to 20 seconds to wake the Dyno, you will need a little patience
 
 
 ### Getting the Project
