@@ -1,11 +1,19 @@
 {
-  "name": "Web Scraper",
-  "description": "This app demonstrate how to use JSoup to scrape websites.",
-  "repository": "https://github.com/juliuskrah/WebScraper",
-  "buildpacks": [
-    {
-      "url": "heroku/java"
-    }
-  ]
+    "name": "WebScraper",
+    "description": "A simple API for extracting data from web pages",
+    "repository": "https://github.com/Prempeh-Gyan/WebScraper",
+    "logo": "https://i.imgur.com/NaAbFil.png",
+    "success_url": "/index",
+    "keywords": [
+        "Java",
+        "Spring",
+        "Thymeleaf",
+        "Jsoup",
+        "RESTful Services",
+        "Web Service"
+    ],
+    "env": {
+        "BUILDPACK_URL": "heroku/java"
+    },
+    "generator": "https://www.expeditedssl.com/heroku-button-maker"
 }
-
