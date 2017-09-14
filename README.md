@@ -3,6 +3,9 @@
 ## Quick Start
 This section contains the pre-requisite to run the application and how to use the API.
 
+### Travis
+[![Build Status](https://travis-ci.org/Prempeh-Gyan/WebScraper.svg)](https://travis-ci.org/Prempeh-Gyan/WebScraper)
+
 ### Deploy on Heroku
 To deploy this project on Heroku, click the button below:
 
