@@ -14,9 +14,9 @@ import com.prempeh.webscraper.utility.SummarizeLinksUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This controller is for mapping RESTful requests. Both the getLinksOnPage and
- * postLinksOnPage methods return a JSON representation of the summary returned
- * by the SummarizeLinksUtil Class
+ * This controller is for mapping RESTful requests. The getLinksOnPage method
+ * returns a JSON representation of the summary returned by the
+ * SummarizeLinksUtil Class
  * 
  * @author Prince Prempeh Gyan
  * @version 1.0 <br/>
@@ -30,7 +30,7 @@ public class RestController {
 	@Autowired
 	private ScrapingService scrapingService;
 
-	@RequestMapping(value = { "/summarizeLinksOnPage" }, method = { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = { "/summarizeLinksOnPage" }, method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Long> getLinksOnPage(@RequestParam(value = "url") String url) throws IOException {
 
 		log.info("Restful Request to summarizeLinksOnPage with url : {}", url);

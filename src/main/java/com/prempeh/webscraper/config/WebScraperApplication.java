@@ -20,9 +20,6 @@ public class WebScraperApplication extends WebMvcConfigurerAdapter {
 		SpringApplication.run(WebScraperApplication.class, args);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("index");

@@ -27,8 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ViewController {
 
 	/**
-	 * The ScrapingService provides a method for extracting all links that appear
-	 * on a particular page
+	 * The ScrapingService provides a method for extracting all links that appear on
+	 * a particular page
 	 */
 
 	@Autowired
@@ -58,8 +58,8 @@ public class ViewController {
 		log.info("POST Request to Index.html with url : {}", url);
 
 		/**
-		 * The SummarizeLinksUtil Class contains a static method that takes a list
-		 * of links and returns a summary of the unique links and their corresponding
+		 * The SummarizeLinksUtil Class contains a static method that takes a list of
+		 * links and returns a summary of the unique links and their corresponding
 		 * frequencies of appearance on the given url or web page
 		 */
 		model.addAttribute("pageSummary", SummarizeLinksUtil.getSummary(url, scrapingService));

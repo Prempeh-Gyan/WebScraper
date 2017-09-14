@@ -1,6 +1,9 @@
 package com.prempeh.webscraper.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * This class is used as a model for representing all errors and exceptions in
@@ -12,7 +15,10 @@ import lombok.Data;
  *          Date: 09/09/2017
  *
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class GenericResponse {
 	/**
 	 * The "message" variable represent the message the JVM sends when an error or
@@ -20,10 +26,5 @@ public class GenericResponse {
 	 */
 	private String message;
 	private String error;
-
-	public GenericResponse(String message2, String string) {
-		this.message = message2;
-		this.error = string;
-	}
 
 }
