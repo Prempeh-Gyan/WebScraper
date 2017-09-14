@@ -1,7 +1,4 @@
 language: java
 jdk:
   - oraclejdk8
-deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-on: master
+group: deprecated-2017Q3
