@@ -35,22 +35,6 @@ public class ViewController {
 	private ScrapingService scrapingService;
 
 	/**
-	 * The application loads the Index Page by default on startup, or by a GET
-	 * request on the "/" or "/index" Request Mapping
-	 * 
-	 * @return The Index Page is returned to clients that make GET request to the
-	 *         "/index" or the "/" Request Mapping
-	 */
-	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
-	public String getIndexPage() {
-
-		log.info("GET Request for Index.html");
-
-		return "index";
-
-	}
-
-	/**
 	 * The postIndexPage method maps POST requests to the "/index" Request Mapping.
 	 * This method expects that a url parameter is submitted through the body of the
 	 * post request.

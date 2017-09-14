@@ -30,18 +30,10 @@ public class RestController {
 	@Autowired
 	private ScrapingService scrapingService;
 
-	@RequestMapping(value = { "/summarizeLinksOnPage" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/summarizeLinksOnPage" }, method = { RequestMethod.GET, RequestMethod.POST})
 	public Map<String, Long> getLinksOnPage(@RequestParam(value = "url") String url) throws IOException {
 
-		log.info("Restful GET Request to summarizeLinksOnPage with url : {}", url);
-
-		return SummarizeLinksUtil.getSummary(url, scrapingService);
-	}
-
-	@RequestMapping(value = { "/summarizeLinksOnPage" }, method = RequestMethod.POST)
-	public Map<String, Long> postLinksOnPage(@RequestParam String url) throws IOException {
-
-		log.info("Restful POST Request to summarizeLinksOnPage with url : {}", url);
+		log.info("Restful Request to summarizeLinksOnPage with url : {}", url);
 
 		return SummarizeLinksUtil.getSummary(url, scrapingService);
 	}
