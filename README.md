@@ -17,10 +17,10 @@ It takes between 15 to 20 seconds to wake the Dyno, you will need a little patie
 
 *Required*
 * [`Maven`](https://maven.apache.org/) 3.3+
-* [`JDK`](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 8+ - you will need at least Java-8 to run this application
+* [`JDK`](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 8+ 
 
 *Optional*
-* [`Postman`](https://www.getpostman.com/) - for testing the api endpoints
+* [`Postman`](https://www.getpostman.com/) - for testing the api endpoint
 
 Get the project from the source repository
 >`git clone https://github.com/Prempeh-Gyan/WebScraper.git`
