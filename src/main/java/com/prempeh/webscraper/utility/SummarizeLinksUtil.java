@@ -41,6 +41,7 @@ public class SummarizeLinksUtil {
 		Map<String, Long> SummaryOfLinksOnPage = linksOnPage.parallelStream()
 				.filter(link -> (link != null && link != ""))
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
 		log.info("Returning results of URLs and their corresponding frequencies of appearnace on {}", url);
 		return SummaryOfLinksOnPage;
 	}

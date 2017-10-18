@@ -34,6 +34,12 @@ public class SummarizeLinksUtilTest {
 
 		listOfLinks.add("www.a.com");
 		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
+		listOfLinks.add("www.a.com");
 		listOfLinks.add("www.b.com");
 		listOfLinks.add("www.b.com");
 		listOfLinks.add("www.c.com");
@@ -46,8 +52,14 @@ public class SummarizeLinksUtilTest {
 		when(scrapingService.getAllLinksOnThisPage(url)).thenReturn(listOfLinks);
 
 		Map<String, Long> getSummary = SummarizeLinksUtil.getSummary(url, scrapingService);
+		
+		getSummary.forEach((a, b) -> {
+			if (b > 2) {
+				getSummary.remove(a);
+			}
+		});
 
-		assertTrue(getSummary.get("www.a.com") == 2);
+		assertTrue(getSummary.get("www.e.com") == 2);
 
 		assertTrue(getSummary.size() == 5);
 
