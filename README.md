@@ -59,49 +59,64 @@ You can also make a post request to the same `API-endpoint` in which case you wi
 ### The Web Service
 Below is the code snippet for the web service of the `API-endpoint`
 
-file: `src/main/java/com/prempeh/webscraper/service/ScrapingService.java`
-```java
+file: `src/main/java/com/prempeh/webscraper/service/WebScrapingService.java`
 
+file: `src/main/java/com/prempeh/webscraper/serviceImpl/WebScrapingServiceImpl.java`
+
+```java
 package com.prempeh.webscraper.service;
+
+import java.io.IOException;
+import java.util.Map;
+/**
+ * This is the WebScrapingService interface defining the action required to retrieve a summary of the links on a web page
+ * 
+ * @author Prince Prempeh Gyan
+ * @version 1.0 <br/>
+ *          Date: 19/10/2017
+ *
+ */
+public interface WebScrapingService {
+
+	Map<String, Long> getSummaryOfLinksOnPage(String url) throws IOException;
+}
+
+
+
+package com.prempeh.webscraper.serviceImpl;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
-import lombok.Data;
+import com.prempeh.webscraper.service.WebScrapingService;
+
 import lombok.extern.slf4j.Slf4j;
 /**
- * This ScrapingService Class takes a url, uses Jsoup to connect to the page,
+ * This WebScrapingService Implementation takes a url, uses Jsoup to connect to the page,
  * extract links from the page and return a list of all the links on the page
  * 
  * @author Prince Prempeh Gyan
- * @version 1.0 <br/>
- *          Date: 09/09/2017
+ * @version 1.1 <br/>
+ *          Date: 19/10/2017
  *
  */
 @Service
-@Data
 @Slf4j
-public class ScrapingService {
+public class WebScrapingServiceImpl implements WebScrapingService {
 
-	/**
-	 * @param url
-	 *            - The String representing the url of the web page to be accessed
-	 * @return - Returns a list of strings representing the links from a particular
-	 *         web page
-	 * @throws IOException
-	 *             - Throws an exception if the url is malformed or the host is
-	 *             unknown
-	 */
-	public List<String> getAllLinksOnThisPage(String url) throws IOException {
-
+	@Override
+	public Map<String, Long> getSummaryOfLinksOnPage(String url) throws IOException {
 		List<String> linksExtractedOnPage = new ArrayList<>();
 
 		log.info("Jsoup is connecting to : {}", url);
@@ -128,8 +143,8 @@ public class ScrapingService {
 		 * URIs. Java 8s streams and lambdas are used here to enhance performance. For
 		 * the purposes of this application only the host names of the URIs are of
 		 * interest at this level, the "schemes" and the "paths" are not necessary. All
-		 * extracted host names are added to the "linksExtractedOnPage" variable.
-		 * At this point the list may contain duplicate host names.
+		 * extracted host names are added to the "linksExtractedOnPage" variable. At
+		 * this point the list may contain duplicate host names.
 		 */
 		linksOnPage.parallelStream().forEach(linkOnPage -> {
 
@@ -156,44 +171,11 @@ public class ScrapingService {
 
 		log.info("Returning list of HostNames to caller");
 
-		return linksExtractedOnPage;
+		return getSummary(linksExtractedOnPage);
 	}
-}
-```
 
-### The Utility Class for processing the list returned by the Web Service
-
-file: `src/main/java/com/prempeh/webscraper/utility/SummarizeLinksUtil.java`
-```java
-package com.prempeh.webscraper.utility;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import com.prempeh.webscraper.service.ScrapingService;
-
-import lombok.extern.slf4j.Slf4j;
-
-/**
- * This Class uses streams and lambdas to process the links returned by the
- * ScrapingService, thereby removing empty links and grouping them according to
- * their host names
- * 
- * @author Prince Prempeh Gyan
- * @version 1.0 <br/>
- *          Date: 09/09/2017
- *
- */
-@Slf4j
-public class SummarizeLinksUtil {
-
-	public static Map<String, Long> getSummary(String url, ScrapingService scrapingService) throws IOException {
-
-		List<String> linksOnPage = scrapingService.getAllLinksOnThisPage(url);
-
+	private Map<String, Long> getSummary(List<String> linksOnPage) {
+		
 		log.info("List of HostNames recieved");
 		log.info("Removing empty HostNames from list");
 		log.info("Grouping identical HostNames and counting");
@@ -205,15 +187,17 @@ public class SummarizeLinksUtil {
 		 * Value pairs, where the host names are saved as Keys and their corresponding
 		 * frequencies are saved as values. The result is then returned to the caller.
 		 */
+
 		Map<String, Long> SummaryOfLinksOnPage = linksOnPage.parallelStream()
-				.filter(link -> (link != null && link != ""))
-				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-		log.info("Returning results of URLs and their corresponding frequencies of appearnace on {}", url);
+				.filter(link -> (link != null && !link.isEmpty()))
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));		
 		return SummaryOfLinksOnPage;
 	}
 
 }
+
 ```
+
 ## Graphical Overview of using the API 
 
 *Homepage*

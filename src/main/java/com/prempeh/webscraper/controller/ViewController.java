@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.prempeh.webscraper.service.ScrapingService;
-import com.prempeh.webscraper.utility.SummarizeLinksUtil;
+import com.prempeh.webscraper.service.WebScrapingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +17,8 @@ import lombok.extern.slf4j.Slf4j;
  * an HTML page to clients that make GET and POST requests to it
  * 
  * @author Prince Prempeh Gyan
- * @version 1.0 <br/>
- *          Date: 09/09/2017
+ * @version 1.1 <br/>
+ *          Date: 19/10/2017
  */
 
 @org.springframework.stereotype.Controller
@@ -27,12 +26,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ViewController {
 
 	/**
-	 * The ScrapingService provides a method for extracting all links that appear on
-	 * a particular page
+	 * The WebScrapingService provides a method for extracting all links that appear
+	 * on a particular page
 	 */
 
 	@Autowired
-	private ScrapingService scrapingService;
+	private WebScrapingService webScrapingService;
 
 	/**
 	 * The postIndexPage method maps POST requests to the "/index" Request Mapping.
@@ -58,11 +57,11 @@ public class ViewController {
 		log.info("POST Request to Index.html with url : {}", url);
 
 		/**
-		 * The SummarizeLinksUtil Class contains a static method that takes a list of
-		 * links and returns a summary of the unique links and their corresponding
-		 * frequencies of appearance on the given url or web page
+		 * The WebScrapingService contains a method that takes url as parameter and
+		 * returns a summary of the unique links and their corresponding frequencies of
+		 * appearance on the given url or web page
 		 */
-		model.addAttribute("pageSummary", SummarizeLinksUtil.getSummary(url, scrapingService));
+		model.addAttribute("pageSummary", webScrapingService.getSummaryOfLinksOnPage(url));
 
 		log.info("Rendering Page");
 

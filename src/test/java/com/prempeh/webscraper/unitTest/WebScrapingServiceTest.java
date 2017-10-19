@@ -1,26 +1,28 @@
 package com.prempeh.webscraper.unitTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
-import com.prempeh.webscraper.service.ScrapingService;
+import com.prempeh.webscraper.service.WebScrapingService;
+import com.prempeh.webscraper.serviceImpl.WebScrapingServiceImpl;
 
 
-public class ScrapingServiceTest {
+public class WebScrapingServiceTest {
 
-	private ScrapingService scrapingService = new ScrapingService();
+
+	private WebScrapingService webScrapingService = new WebScrapingServiceImpl();
 
 	@Test
 	public final void testGetAllLinksOnThisPage() throws IOException {
 
 		String url = "http://www.google.com";
 
-		List<String> extractedLinksFromPage = scrapingService.getAllLinksOnThisPage(url);
+		Map<String, Long> extractedLinksFromPage = webScrapingService.getSummaryOfLinksOnPage(url);
 
 		assertTrue(extractedLinksFromPage.size() > 0);
 
@@ -32,7 +34,7 @@ public class ScrapingServiceTest {
 
 		String url = "someWrongInput";
 
-		List<String> extractedLinksFromPage = scrapingService.getAllLinksOnThisPage(url);
+		Map<String, Long> extractedLinksFromPage = webScrapingService.getSummaryOfLinksOnPage(url);
 
 	}
 
@@ -42,18 +44,17 @@ public class ScrapingServiceTest {
 		String url = "";
 
 		@SuppressWarnings("unused")
-		List<String> extractedLinksFromPage = scrapingService.getAllLinksOnThisPage(url);
+		Map<String, Long> extractedLinksFromPage = webScrapingService.getSummaryOfLinksOnPage(url);
 
 	}
 
 	@Test(expected = UnknownHostException.class)
 	public void nonexistenceHostName() throws IOException {
 
-		String url = "http://somethingThatDoesNotExist";
+		String url = "http://www.SomeUrlThatDoesNotExist";
 
 		@SuppressWarnings("unused")
-		List<String> extractedLinksFromPage = scrapingService.getAllLinksOnThisPage(url);
+		Map<String, Long> extractedLinksFromPage = webScrapingService.getSummaryOfLinksOnPage(url);
 
 	}
-
 }
